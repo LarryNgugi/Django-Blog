@@ -1,0 +1,22 @@
+{% extends 'blog/base.html'%}
+
+{% block 'content' %}
+
+<div class="container-fluid">
+    <div class="row justify-content-center py-5 bg-dark">
+        <div class="col-lg-8 text-center text-light my-5">
+  
+            <h1 class="m-5"><i class="fa fa-edit text-primary mr-3"></i>{{heading}}</h1>
+  
+        </div>
+    </div>
+
+    <div class="row">
+        {% include 'blog/simple-posts.html' %}
+    </div>
+    
+  </div>
+  
+
+
+{% endblock %}

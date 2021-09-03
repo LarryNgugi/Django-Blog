@@ -1,20 +1,41 @@
 {% extends 'blog/base.html' %}
 
+{% load static %}
+
 {% block 'content' %}
+<!-- heading -->
 
 <div class="container-fluid">
-  <div class="row justify-content-center py-5 bg-dark">
-      <div class="col-lg-8 text-center text-light my-5">
 
-          <h1 class="m-5"><i class="fa fa-edit text-primary mr-3"></i>{{heading}}</h1>
+  <div class="row justify-content-center">
 
-      </div>
+    <div class="col-lg-5 col-md-5 col-sm-12 text-center box">
+
+      <small class=" ml-2"> {{heading}} </small>
+      <h4 class="box ">Ape on the Moon was founded by illustrator Alex Mathers <span style="display: block;">and Phillip Dennis, who’s work you can find here.</span> </h4>
+
+    </div>
+    
+  
+    <div class="col-lg-5 col-md-5  col-sm-12 p-5 ml-auto">
+
+      <img src="{% static 'images/langing.svg' %}">
+
+    </div>
+  
   </div>
 
-<h3 class="text-center my-5 ">Awesome Topics</h3>
+  
+
 
 </div>
 
+
+
+
+<h3 class="text-center my-5 ">Awesome Topics</h3>
+
+<!-- heading end -->
 
 <div class="container-fluid">
 
@@ -49,5 +70,3 @@
 
 
 {% endblock%}
-
-

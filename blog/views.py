@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 
 # Create your views here.
 
@@ -7,7 +7,7 @@ from django.http import HttpResponse
 def home(request):
 
     context = {
-        'heading': 'My First Blog!',
+        'heading': 'APE ON THE MOON.',
         'services': ["Coding.", "Eating.", "Sleeping."],
         'posts' :["Big Blue World", "Out of Space","A-O A-Okay"]
     }
@@ -32,5 +32,15 @@ def blog (request):
     }
 
     return render(request, "blog/blog.html", context)
+    
 
+def postDetail (request):
+
+    context = {
+        'heading' : 'Related Posts',
+        'posts' :["I am number 4","Wildlife","Adventure"]
+
+    }
+
+    return render(request, 'blog/post-detail.html', context)
 
