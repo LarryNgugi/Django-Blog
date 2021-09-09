@@ -6,10 +6,13 @@ from django.http import HttpResponse, request
 
 def home(request):
 
+    services = ["Coding.", "Eating.", "Sleeping."]
+    date_today = "06-sept"
     context = {
         'heading': 'APE ON THE MOON.',
-        'services': ["Coding.", "Eating.", "Sleeping."],
-        'posts' :["Big Blue World", "Out of Space","A-O A-Okay"]
+        'services': services,
+        'posts' :["Big Blue World", "Out of Space","A-O A-Okay"],
+        'date': date_today,
     }
 
     return render(request, "home.html", context)

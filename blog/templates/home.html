@@ -2,30 +2,38 @@
 
 {% load static %}
 
+{% block 'css' %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+{% endblock %}
+
 {% block 'content' %}
+
 <!-- heading -->
 
 <div class="container-fluid">
 
   <div class="row justify-content-center">
 
-    <div class="col-lg-5 col-md-5 col-sm-12 text-center box">
+    <div class="col-lg-6 col-md-6 col-sm-12  my-auto box">
 
-      <small class=" ml-2"> {{heading}} </small>
-      <h4 class="box ">Ape on the Moon was founded by illustrator Alex Mathers <span style="display: block;">and Phillip Dennis, who’s work you can find here.</span> </h4>
-
-    </div>
-    
-  
-    <div class="col-lg-5 col-md-5  col-sm-12 p-5 ml-auto">
-
-      <img src="{% static 'images/langing.svg' %}">
+      <small class=" "> {{heading}} </small>
+      <h2 class="">Ape on the Moon was founded by illustrator Alex Mathers and Phillip
+        Dennis, who's work<span style="display: block;"> you can find here.</span> </h2>
 
     </div>
-  
+
+
+    <div class="col-lg-5 col-md-5 col-sm-12 p-5 ml-auto">
+
+      <img src="{% static 'images/langing.svg' %}" class="pb-5 pr-5">
+
+    </div>
+
   </div>
 
-  
+
 
 
 </div>
@@ -39,7 +47,7 @@
 
 <div class="container-fluid">
 
-  <div class="row justify-content-center">
+  <div class="row justify-content-center ">
 
 
     {%for service in services %}
@@ -47,8 +55,9 @@
     <div class=" col-lg-4 col-md-4 col-sm-12">
       <div class="card bg-dark mt-1">
         <div class="card-body text-center text-light">
-          <p><i class=" fa fa-ravelry fa-2x"></i></p>
-          <p class="mx-5 mb-5 mt-2">{{service}}</p>
+          <p><i class=" fa fa-ravelry fa-2x animate__animated animate__bounceIn"></i></p>
+          <p class="mx-5 mb-5 mt-2 animate__animated animate__bounceIn">{{service}} </p>
+
         </div>
       </div>
     </div>
@@ -69,4 +78,10 @@
 </div>
 
 
-{% endblock%}
+{% endblock %}
+
+{%block 'scripts' %}
+
+<!-- remaind empty -->
+
+{% endblock %}

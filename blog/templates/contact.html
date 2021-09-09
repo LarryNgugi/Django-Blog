@@ -1,5 +1,7 @@
 {% extends 'blog/base.html'%}
 
+{% load static %}
+
 {% block 'content' %}
 
 <div class="container-fluid">
@@ -58,7 +60,7 @@
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-12 ml-5 pt-5 pb-5">
 
-      <form>
+      <form id="contactForm">
 
         <div class="form-group">
             <input type="text" id="name" name="name" class=" form-control m-1" placeholder="Name*">
@@ -87,13 +89,56 @@
             <textarea name="message" id="maneno" class=" form-control m-1"
                 placeholder="Write your message here"></textarea>
         </div>
+        <button type="submit" class="btn btn-secondary btn-lg">Submit</button>
      
     </form>
     </div>
   </div>
-</div> 
+</div>
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="thanksModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <h5 class="text-center text-black mt-3 font-weight-bold">Much Appreciation</h5>
+
+         
+
+        <div class="modal-body">
+          <div class="row justify-content-center">
+
+            <div class="col-lg-10">
+                <img src="{% static 'images/thankyou.svg' %} " class="img-fluid p-5">
+                <h4> Thank you for your message.</h4>
+                <p> We will reach out to you as soon as we can. Cheers</p>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+
+
   <!-- form end -->
 
 {% endblock %}
+
+{%block 'scripts' %}
+
+    <script>
+        $(document).ready(function(){
+            $("#contactForm").on("submit", function(e){
+                e.preventDefault();
+                console.log("prevented");
+
+            $("#thanksModal").modal("show")
+            });
+        });
+    </script>
+  {% endblock %}
 
 
