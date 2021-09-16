@@ -9,15 +9,18 @@
 <div class="container-fluid">
 
 
-    <h3 class="mx-3 "> Feedback ({{feedback_list|length}}) </h3>
+    <h3 class="my-3 "> Feedback ({{feedback_list|length}}) </h3>
 
     <div class="row justify-content-center">
 
         <div class="col-lg-10">
 
-            <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <h5>Your Messages</h5>
+
+                </div>
                 
-                <h5>Your Messages</h5>
 
             </div>
 
@@ -32,6 +35,7 @@
                             <td>Phone Number</td>
                             <td>Message</td>
                             <td>Post at</td>
+                            <td>Action</td>
 
                         </tr>
                     </thead>
@@ -47,6 +51,11 @@
                             <td>{{feedback.phone_number}}</td>
                             <td>{{feedback.message}}</td>
                             <td>{{feedback.created_at}}</td>
+                            <td>
+                                <a href=" {% url 'delete_feedback' feedback.id %} " class="btn btn-danger btn-sm">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
 
                         </tr>
 

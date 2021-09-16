@@ -25,6 +25,7 @@ staff_patterns = [
     path('store/categories',views.storeCategory,name='store_category'),
     path('categories/form',views.categoryForm,name='add_category'),
     path('delete/category <id>',views.deleteCategory,name='delete_category'),
+    path('delete/feedback <id>',views.deleteFeedback,name='delete_feedback'),
 
 
 ]

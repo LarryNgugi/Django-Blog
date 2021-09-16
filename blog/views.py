@@ -101,3 +101,10 @@ def deleteCategory (request,id):
     our_category.delete()
 
     return HttpResponseRedirect('/staff/categories')
+
+def deleteFeedback (request,id):
+
+    our_feedback = Feedback.objects.get(pk = id)
+    our_feedback.delete()
+
+    return HttpResponseRedirect('/staff/feedback')
