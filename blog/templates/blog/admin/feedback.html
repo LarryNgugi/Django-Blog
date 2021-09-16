@@ -1,0 +1,79 @@
+{% extends 'blog/admin/layouts/admin-base.html' %}
+
+{% load static %}
+
+
+
+{% block 'content' %}
+
+<div class="container-fluid">
+
+
+    <h3 class="mx-3 "> Feedback ({{feedback_list|length}}) </h3>
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10">
+
+            <div class="card">
+                
+                <h5>Your Messages</h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <td>id</td>
+                            <td>Name</td>
+                            <td>Email</td>
+                            <td>Phone Number</td>
+                            <td>Message</td>
+                            <td>Post at</td>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for feedback in feedback_list %}
+
+                        <tr>
+                            <td>{{feedback.id}}</td>
+                            <td>{{feedback.name}}</td>
+                            <td>{{feedback.email}}</td>
+                            <td>{{feedback.phone_number}}</td>
+                            <td>{{feedback.message}}</td>
+                            <td>{{feedback.created_at}}</td>
+
+                        </tr>
+
+                        {% endfor %}
+                         
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block 'scripts' %}
+
+<!-- remaind empty -->
+
+{% endblock %}

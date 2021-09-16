@@ -1,0 +1,66 @@
+{% extends 'blog/admin/layouts/admin-base.html' %}
+
+{% load static %}
+
+
+
+{% block 'content' %}
+
+
+<div class="container">
+
+    <h3 class="mx-3"> Categories</h3>
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+            
+            <div class="card-header">
+
+                <div class="row ">
+                    
+                    <h5>Add New Categories</h5>
+
+                </div>
+            </div>
+         
+            <div class="card-body">
+                
+                            <form action=" {% url 'store_category' %} " method="POST">
+                
+                                {% csrf_token %}
+                
+                                <div class="form-group">
+                                    <input type="text" id="name" name="name" class=" form-control m-1" required placeholder="Name*">
+                                </div>
+                
+                                
+                
+                                <button type="submit"  class="btn btn-secondary btn-lg">Submit</button>
+                
+                            </form>
+                   
+            
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{%block 'scripts' %}
+
+<!-- remaind empty -->
+
+{% endblock %}

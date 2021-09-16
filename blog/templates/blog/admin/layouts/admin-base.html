@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
     integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/adminstyle.css' %}">
 
   {% block 'css' %}
 
@@ -29,17 +29,26 @@
 
 <body>
 
-  {% include 'blog/navbar.html' %}
+  <div class="wrapper">
+    {% include 'blog/admin/layouts/admin-sidebar.html' %}
+
+    <div id="content" class="container-fluid">
+
+      {% include 'blog/admin/layouts/admin-nav.html' %}
+
+      {% block 'content' %}
+
+      <!-- remaind empty -->
+
+      {% endblock 'content' %}
 
 
-  {% block 'content' %}
 
-  <!-- remaind empty -->
-
-  {% endblock 'content' %}
+    </div>
+  </div>
 
 
-  {% include 'blog/footer.html' %}
+
 
 
 
@@ -58,6 +67,19 @@
   <!-- remaind empty -->
 
   {% endblock 'scripts' %}
+
+  <script>
+    $(document).ready(function () {
+
+      $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+      });
+
+    });
+  </script>
+
+
+
 </body>
 
 </html>
