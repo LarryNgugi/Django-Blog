@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import path
 from django.urls.conf import include
 from blog import views
+from .views import PostList,PostCreate,PostDetails
 
 
 staff_patterns = [
@@ -25,8 +26,11 @@ staff_patterns = [
     path('store/categories',views.storeCategory,name='store_category'),
     path('categories/form',views.categoryForm,name='add_category'),
     path('delete/category <id>',views.deleteCategory,name='delete_category'),
+    path('delete/posts <id>',views.deletePost,name='delete_post'),
     path('delete/feedback <id>',views.deleteFeedback,name='delete_feedback'),
-
+    path('posts',PostList.as_view(),name='posts'),
+    path('create/post',PostCreate.as_view(),name='add_post'),
+    path('view/post/<pk>',PostDetails.as_view(),name='view_post'),
 
 ]
 

@@ -1,7 +1,10 @@
+from typing import ClassVar
 from django.db.models.query_utils import Q
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Category, Feedback
+from .models import Category, Feedback, Post
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
 
 # Create your views here.
 
@@ -10,7 +13,7 @@ def home(request):
 
     context = {
         'heading': 'APE ON THE MOON.',
-        'services':Category.objects.all()[:3],
+        'services': Category.objects.all()[:3],
         'posts': ["Big Blue World", "Out of Space", "A-O A-Okay"],
     }
 
@@ -63,7 +66,8 @@ def saveFeedback(request):
     phone_number = request.POST.get("number")
     message = request.POST.get("message")
 
-    Feedback.objects.create(name=name, email=email,phone_number=phone_number, message=message)
+    Feedback.objects.create(name=name, email=email,
+                            phone_number=phone_number, message=message)
 
     context = {}
 
@@ -77,34 +81,64 @@ def showFeedback(request):
 
     return render(request, 'blog/admin/feedback.html', context)
 
+
 def showCategory(request):
 
     context = {
-        'category_list' : Category.objects.all()
+        'category_list': Category.objects.all()
     }
-    return render(request,'blog/admin/categories.html',context)
+    return render(request, 'blog/admin/categories.html', context)
+
 
 def categoryForm(request):
-    context ={}
+    context = {}
 
-    return render(request,'blog/admin/category-form.html',context)
-    
+    return render(request, 'blog/admin/category-form.html', context)
+
+
 def storeCategory(request):
     Category_name = request.POST.get("name")
-    Category.objects.create(name = Category_name)
+    Category.objects.create(name=Category_name)
 
     return HttpResponseRedirect('/staff/categories')
 
-def deleteCategory (request,id):
 
-    our_category = Category.objects.get(pk = id)
+def deleteCategory(request, id):
+
+    our_category = Category.objects.get(pk=id)
     our_category.delete()
 
     return HttpResponseRedirect('/staff/categories')
 
-def deleteFeedback (request,id):
 
-    our_feedback = Feedback.objects.get(pk = id)
+def deleteFeedback(request, id):
+
+    our_feedback = Feedback.objects.get(pk=id)
     our_feedback.delete()
 
     return HttpResponseRedirect('/staff/feedback')
+
+
+def deletePost(request, id):
+
+    our_post = Post.objects.get(pk=id)
+    our_post.delete()
+
+    return HttpResponseRedirect('/staff/posts')
+
+
+class PostList(ListView):
+    model = Post
+    template_name = "blog/admin/posts.html"
+
+
+class PostCreate(CreateView):
+    model = Post
+    template_name = "blog/admin/post-form.html"
+    fields = "__all__"
+    success_url = '/staff/posts'
+
+
+class PostDetails(DetailView):
+
+    pass

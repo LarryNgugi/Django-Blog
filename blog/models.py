@@ -13,6 +13,9 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
 
+    def __str__(self):
+        return self.name
+
 class Post(models.Model):
     tittle = models.CharField(max_length= 100)
     message = models.TextField()
@@ -29,6 +32,9 @@ class Post(models.Model):
 
     class Meta:
         verbose_name_plural = 'Post'
+
+    def __str__(self):
+        return self.tittle
     
 
 class Comment (models.Model):
@@ -42,7 +48,7 @@ class Comment (models.Model):
 
     class Meta:
         verbose_name_plural = 'Comment'
-
+    
 class Feedback (models.Model):
     message = models.TextField()
     name = models.CharField(max_length=50,blank=True,null=True)
@@ -53,6 +59,8 @@ class Feedback (models.Model):
 
     class Meta:
         verbose_name_plural = 'Feedback'
+    def __str__(self):
+        return self.name
 
 class Seo(models.Model):
     title = models.CharField(max_length=100)
