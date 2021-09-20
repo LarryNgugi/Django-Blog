@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Category, Feedback, Post
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 # Create your views here.
 
@@ -66,8 +66,7 @@ def saveFeedback(request):
     phone_number = request.POST.get("number")
     message = request.POST.get("message")
 
-    Feedback.objects.create(name=name, email=email,
-                            phone_number=phone_number, message=message)
+    Feedback.objects.create(name=name, email=email,phone_number=phone_number, message=message)
 
     context = {}
 
@@ -119,12 +118,7 @@ def deleteFeedback(request, id):
     return HttpResponseRedirect('/staff/feedback')
 
 
-def deletePost(request, id):
 
-    our_post = Post.objects.get(pk=id)
-    our_post.delete()
-
-    return HttpResponseRedirect('/staff/posts')
 
 
 class PostList(ListView):
@@ -140,5 +134,12 @@ class PostCreate(CreateView):
 
 
 class PostDetails(DetailView):
+    model = Post
+    template_name = "blog/admin/post_detail.html"
+    context_object_name = "post"
 
-    pass
+class PostUpdate(UpdateView):
+    model = Post
+    fields = ['tittle','message','slug','Category','user','keywords','image_url']
+    success_url = '/staff/posts'
+    template_name = "blog/admin/post-form.html"

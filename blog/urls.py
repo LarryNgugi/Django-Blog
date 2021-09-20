@@ -16,21 +16,26 @@ Including another URLconf
 from django.urls import path
 from django.urls.conf import include
 from blog import views
-from .views import PostList,PostCreate,PostDetails
+from django.conf import settings
+from django.conf.urls.static import static
+from .views import PostList,PostCreate,PostDetails, PostUpdate
+
 
 
 staff_patterns = [
-    path('dashboard', views.dashboard, name='dashboard'),
+
+    path('', views.dashboard, name='staff'),
     path('feedback', views.showFeedback, name='feedback'),
     path('categories',views.showCategory,name='categories'),
     path('store/categories',views.storeCategory,name='store_category'),
     path('categories/form',views.categoryForm,name='add_category'),
     path('delete/category <id>',views.deleteCategory,name='delete_category'),
-    path('delete/posts <id>',views.deletePost,name='delete_post'),
     path('delete/feedback <id>',views.deleteFeedback,name='delete_feedback'),
     path('posts',PostList.as_view(),name='posts'),
     path('create/post',PostCreate.as_view(),name='add_post'),
     path('view/post/<pk>',PostDetails.as_view(),name='view_post'),
+    path('update/post/<pk>',PostUpdate.as_view(),name='update_post'),
+
 
 ]
 
@@ -39,7 +44,11 @@ urlpatterns = [
     path('contact/', views.contact, name="contact"),
     path('blog/', views.blog, name="blog"),
     path('post-detail/', views.postDetail, name="post-detail"),
-    path('staff/', include(staff_patterns)),
+    path('staff/',include(staff_patterns)),
     path ('save/feedback',views.saveFeedback, name = "save_feedback")
 
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
