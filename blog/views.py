@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Category, Feedback, Post
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
+from blog.forms import CommentForm
 
 # Create your views here.
 
@@ -14,10 +15,23 @@ def home(request):
     context = {
         'heading': 'APE ON THE MOON.',
         'services': Category.objects.all()[:3],
-        'posts': ["Big Blue World", "Out of Space", "A-O A-Okay"],
+        'posts': Post.objects.all()[:6]
     }
 
     return render(request, "home.html", context)
+
+def getPostDetails(request,id):
+
+    our_post : Post.objects.get(pk = id)
+
+    context = {
+        'post' : our_post,
+        'categories': Category.objects.all(),
+        'posts' : Post.objects.filter(category = our_post.category).exclude(pk = our_post.id),
+        'commentForm' : CommentForm(),
+
+    }
+    return render(request, "blog/post-detail.html", context)
 
 
 def contact(request):
@@ -34,7 +48,9 @@ def contact(request):
 
 def blog(request):
     context = {
+
         'posts': ["Big Blue World", "Out of Space", "A-O A-Okay", "I am number 4", "Wildlife", "Adventure"]
+
     }
 
     return render(request, "blog/blog.html", context)
