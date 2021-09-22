@@ -18,7 +18,7 @@ from django.urls.conf import include
 from blog import views
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import PostList,PostCreate,PostDetails, PostUpdate, getPostDetails
+from .views import PostList,PostCreate,PostDetails, PostUpdate, getPostDetails, saveComment
 
 
 
@@ -46,7 +46,9 @@ urlpatterns = [
     path('post-detail/', views.postDetail, name="post-detail"),
     path('staff/',include(staff_patterns)),
     path ('save/feedback',views.saveFeedback, name = "save_feedback"),
-    path('posts/details/<id>',views.getPostDetails,name="post_detail")
+    path('posts/details/<id>',views.getPostDetails,name="post_detail"),
+    path('save/comment/<id>',views.saveComment,name="save_comment")
+
 ]
 
 

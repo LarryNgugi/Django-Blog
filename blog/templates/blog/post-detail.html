@@ -30,22 +30,37 @@
             <h5>Comments</h5>
             <hr>
 
+            {% if not comments %}
+
+            <img src="" class="img-fluid p-5 ">
+            <h5>Be the first to add a comment :)</h5>
+
+            {% else %}
+                {% for comment in comments %}
+                <h6 class="text-main"><i class="fa fa-user mr-2"></i> {{comment.user}}</h6>
+                <p>{{comment.message}}</p>
+                <small>{{comment.created_at}}</small>
+                <hr>
+                 {% endfor %}
+            {% endif %}
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <h5>We'd like to hear your thoughts about this</h5>
-                    <form method="POST">
+                    <form action=" {% url 'save_comment' post.id %} " method="POST">
                         {% csrf_token %}
-                        {% CommentForm.as_p%}
+                        {{commentForm.as_p}}
+                        <button type="submit" class="btn btn-secondary btn-sm">submit</button>
                     </form>
                 </div>
             </div>
         </div>
-        <h4 class="mt-5 mb-3 ">Related Posts</h4>
-        <div class="row my-5">
-            {% include 'blog/simple-posts.html' %}
-        </div>
+       
+    </div>
+    <h4 class="mt-5 mb-3 ">Related Posts</h4>
+    <div class="row my-5">
+        {% include 'blog/simple-posts.html' %}
     </div>
 </div>
 

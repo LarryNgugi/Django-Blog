@@ -40,7 +40,7 @@ class Post(models.Model):
 class Comment (models.Model):
     message = models.TextField()
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=False)
-    Post = models.ForeignKey(Post,on_delete=models.CASCADE,blank=False,null=False)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE,blank=False,null=False)
     likes = models.IntegerField(default=0,blank=True)
     dislikes = models.IntegerField(default=0,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,8 +1,9 @@
-from typing import ClassVar
+
+from django import forms
 from django.db.models.query_utils import Q
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Category, Feedback, Post
+from .models import Category, Feedback, Post,Comment,User
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from blog.forms import CommentForm
@@ -22,13 +23,14 @@ def home(request):
 
 def getPostDetails(request,id):
 
-    our_post : Post.objects.get(pk = id)
+    our_post = Post.objects.get(pk = id)
 
     context = {
         'post' : our_post,
         'categories': Category.objects.all(),
-        'posts' : Post.objects.filter(category = our_post.category).exclude(pk = our_post.id),
+        'posts' : Post.objects.filter(Category = our_post.Category).exclude(pk = our_post.id),
         'commentForm' : CommentForm(),
+        'comments' : Comment.objects.filter(post = our_post.id )
 
     }
     return render(request, "blog/post-detail.html", context)
@@ -49,7 +51,7 @@ def contact(request):
 def blog(request):
     context = {
 
-        'posts': ["Big Blue World", "Out of Space", "A-O A-Okay", "I am number 4", "Wildlife", "Adventure"]
+        'posts': Post.objects.all()
 
     }
 
@@ -65,6 +67,27 @@ def postDetail(request):
     }
 
     return render(request, 'blog/post-detail.html', context)
+
+def saveComment (request,id):
+    form =  CommentForm(request.POST)
+    redirect_url ='/posts/details/'+id
+
+    if form.is_valid():
+        name = form.cleaned_data['name']
+        email = form.cleaned_data['email']
+        phone_number = form.cleaned_data['phone_number']
+        message = form.cleaned_data['message']
+
+        user = User.objects.get(pk = 1)
+        post = Post.objects.get(pk =id)
+
+        Comment.objects.create(message= message, user=user,post = post)
+
+        return HttpResponseRedirect(redirect_url)
+
+    else:
+
+        return HttpResponseRedirect(redirect_url)
 
 
 def dashboard(request):
