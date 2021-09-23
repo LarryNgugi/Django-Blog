@@ -51,7 +51,9 @@ def contact(request):
 def blog(request):
     context = {
 
-        'posts': Post.objects.all()
+        'posts': Post.objects.all(),
+        'all_categories' : Category.objects.all(),
+        'tittle' : "ALL You can read buffet",
 
     }
 
@@ -155,6 +157,20 @@ def deleteFeedback(request, id):
     our_feedback.delete()
 
     return HttpResponseRedirect('/staff/feedback')
+
+def getCategoryPosts(request,id):
+
+    category = Category.objects.get(pk =  id)
+    posts = Post.objects.filter(category= category.id)
+
+
+    context = {
+        'posts' : posts,
+        'all_categories' : category.objects.all(),
+        'tittle' : "Posts in the category:"+category.name,
+    }
+
+    return render(request,'blog/blog.html',context)
 
 
 
