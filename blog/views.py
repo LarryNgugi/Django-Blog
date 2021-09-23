@@ -1,12 +1,13 @@
-
 from django import forms
 from django.db.models.query_utils import Q
+from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Category, Feedback, Post,Comment,User
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from blog.forms import CommentForm
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -161,19 +162,29 @@ def deleteFeedback(request, id):
 def getCategoryPosts(request,id):
 
     category = Category.objects.get(pk =  id)
-    posts = Post.objects.filter(category= category.id)
+    posts = Post.objects.filter(Category= category.id)
 
 
     context = {
         'posts' : posts,
-        'all_categories' : category.objects.all(),
+        'all_categories' : Category.objects.all(),
         'tittle' : "Posts in the category:"+category.name,
     }
 
     return render(request,'blog/blog.html',context)
 
+def searchPost (request):
 
+    search = request.POST.get('search',None)
 
+    posts = Post.objects.filter(message__icontains=search).values()
+
+    data ={
+        'post' :list(posts)
+    }
+
+    return JsonResponse(data)
+   
 
 
 class PostList(ListView):

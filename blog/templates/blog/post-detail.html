@@ -19,7 +19,7 @@
                 <div class="card-body">
                     {% for category in categories %}
 
-                    <p> {{category}} </p>
+                    <a href="{% url 'category_posts' category.id%}"> {{category}} </a>
                     <hr>
                     {% endfor %}
                 </div>
