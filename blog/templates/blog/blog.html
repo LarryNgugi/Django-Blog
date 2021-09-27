@@ -21,6 +21,9 @@
                                     </div>
                                     <!--end of col-->
                                 </div>
+                                <div id="options"
+                                style="position: absolute; background-color: white; z-index: 99;">
+                            </div>
                             </form>
                         </div>
                         <!--end of col-->
@@ -65,7 +68,20 @@
                 dataType : "json",
                 data : {'search' : search},
                 success : function (data) {
+
                     console.log(data)
+                    $("#options").html("");
+                    if(data['posts'].length !=0){
+                        for (i=0;i<data['posts'].length; i++){
+                            
+                            let post = data['post'][i]['tittle']
+                            let url = "/posts/detail/"+ data['post'][i]['id']
+                            console.log(post)
+                            $("#options").append('<a class="btn btn-outline-dark border-o" href="'+url+'">'
+                                +post+'</a><br><hr>')
+
+                        }
+                    }
                 },
                 error : function (data) {
                     console.log(data)

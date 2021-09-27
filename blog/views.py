@@ -6,8 +6,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Category, Feedback, Post,Comment,User
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
-from blog.forms import CommentForm
+from blog.forms import CommentForm,MailForm
 from django.http import JsonResponse
+
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+
+
 
 # Create your views here.
 
@@ -25,6 +30,15 @@ def home(request):
 def getPostDetails(request,id):
 
     our_post = Post.objects.get(pk = id)
+
+
+    our_post.views += 1
+    our_post.save()
+
+    our_post.Category.views += 1
+    our_post.Category.save()
+
+    
 
     context = {
         'post' : our_post,
@@ -103,16 +117,16 @@ def dashboard(request):
 
 def saveFeedback(request):
 
-    name = request.POST.get("name")
-    email = request.POST.get("email")
-    phone_number = request.POST.get("number")
-    message = request.POST.get("message")
+    name = request.POST.get("name",None)
+    email = request.POST.get("email",None)
+    phone_number = request.POST.get("number",None)
+    message = request.POST.get("message",None)
 
     Feedback.objects.create(name=name, email=email,phone_number=phone_number, message=message)
 
-    context = {}
+    data = {}
 
-    return HttpResponseRedirect('/contact')
+    return JsonResponse(data)
 
 
 def showFeedback(request):
@@ -164,7 +178,9 @@ def getCategoryPosts(request,id):
     category = Category.objects.get(pk =  id)
     posts = Post.objects.filter(Category= category.id)
 
-
+    category.views += 1
+    category.save()
+    
     context = {
         'posts' : posts,
         'all_categories' : Category.objects.all(),
@@ -180,11 +196,38 @@ def searchPost (request):
     posts = Post.objects.filter(message__icontains=search).values()
 
     data ={
-        'post' :list(posts)
+        'posts' :list(posts)
     }
 
     return JsonResponse(data)
    
+def sendMail (request):
+    if request.method =="POST":
+        form = MailForm(request.POST)
+
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            recipient = form.cleaned_data['recipient']
+
+            send_mail(
+                subject,
+                message,
+                'admin@gmail.com',
+                [recipient],
+                fail_silently = False
+            )
+
+
+            return HttpResponseRedirect('/staff/feedback')
+
+    else:
+        context ={
+            'form' : MailForm
+        }
+
+        return render(request,'blog/admin/send_mail.html',context)
+
 
 
 class PostList(ListView):

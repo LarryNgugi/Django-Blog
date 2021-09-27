@@ -18,7 +18,7 @@ from django.urls.conf import include
 from blog import views
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import PostList,PostCreate,PostDetails, PostUpdate, getCategoryPosts, getPostDetails, saveComment
+from .views import PostList,PostCreate,PostDetails, PostUpdate, getCategoryPosts, getPostDetails, saveComment, sendMail
 
 
 
@@ -35,6 +35,7 @@ staff_patterns = [
     path('create/post',PostCreate.as_view(),name='add_post'),
     path('view/post/<pk>',PostDetails.as_view(),name='view_post'),
     path('update/post/<pk>',PostUpdate.as_view(),name='update_post'),
+    path('send/mail',views.sendMail,name='send_mail')
 
 
 ]

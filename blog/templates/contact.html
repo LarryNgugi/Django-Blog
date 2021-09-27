@@ -2,6 +2,12 @@
 
 {% load static %}
 
+{% block 'css' %}
+
+<link rel="stylesheet" href=" {% static 'css/notiflix-2.7.0.min.css' %} ">
+
+{% endblock %}
+
 {% block 'content' %}
 
 <div class="container-fluid">
@@ -60,7 +66,7 @@
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 ml-5 pt-5 pb-5">
 
-            <form action=" {% url 'save_feedback' %} " method="POST">
+            <form id="contactForm">
 
                 {% csrf_token %}
 
@@ -96,13 +102,34 @@
 
 {%block 'scripts' %}
 
-<script>
-    $(document).ready(function () {
-        $("#contactForm").on("submit", function (e) {
-            e.preventDefault();
-            console.log("prevented");
+<script src=" {% static 'js/notiflix-2.7.0.min.js' %} "></script>
 
-            $("#thanksModal").modal("show")
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#contactForm").on("submit", function (e) {
+
+            e.preventDefault();
+
+            $.ajax({
+                type : 'POST',
+                url : " {% url 'save_feedback' %}",
+                dataType : "json",
+                data : $("#contactForm").serialize(),
+                success : function () {
+                    $("#contactForm").trigger('reset');
+                    Notiflix.Notify.Success('Thanks Your Message has been sent');
+
+                },
+                error : function () {
+                    Notiflix.Notify.Failure('Qui timide rogat docet negare').modal("show");
+
+                }
+
+            })
+
         });
     });
 </script>

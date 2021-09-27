@@ -5,3 +5,9 @@ class CommentForm(forms.Form):
     email = forms.EmailField(max_length=100)
     phone_number =  forms.CharField(widget=forms.NumberInput)
     message = forms.CharField(widget= forms.Textarea)
+
+
+class MailForm(forms.Form):
+    subject = forms.CharField(max_length=200)
+    message = forms.CharField(widget=forms.Textarea)
+    recipient = forms.EmailField(max_length=100)
