@@ -19,10 +19,14 @@ from django.core.mail import send_mail
 
 def home(request):
 
+    num_of_visits = request.session.get("num_of_visits",0)
+    request.session["num_of_visits"] = num_of_visits + 1
+
     context = {
         'heading': 'APE ON THE MOON.',
         'services': Category.objects.all()[:3],
-        'posts': Post.objects.all()[:6]
+        'posts': Post.objects.all()[:6],
+        'num_of_visits' : num_of_visits,
     }
 
     return render(request, "home.html", context)

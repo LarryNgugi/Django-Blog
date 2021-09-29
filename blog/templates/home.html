@@ -79,11 +79,50 @@
 
 </div>
 
+<div id="cookieDiv" class="d-none" style="width: 50vw;position: fixed; bottom: 0; left: 0;">
+    <div class="card">
+      <div class="card-body text-center ">
+        <img class="img-fluid bg-dark" src=" {% static 'images/cookies.png' %} ">
+        <h4>This site uses cookies</h4>
+        <p>To help provide a pleasant and useful experience to you,we use cookies.</p>
+        <div class="row justify-content-center">
+          <button type="button" id="cancelCookies" class="btn btn-outline-dark border-0">Cancel</button>
+          <button type="button" id="acceptCookies" class="btn btn-outline-dark border-0">Accept</button>
+
+        </div>
+      </div>
+    </div>
+</div>
+
 
   {% endblock %}
 
-  {%block 'scripts' %}
+  {% block 'scripts' %}
 
-  <!-- remaind empty -->
+<script>
+  $(document).ready(function () {
+    $("#cancelCookies").click(function () {
+
+      $("#cookieDiv").addClass("d-none");
+
+    });
+
+    $("#acceptCookies").click(function () {
+      
+      $("#cookieDiv").addClass("d-none");
+
+    });
+
+    var num_of_visits = '{{num_of_visits}}';
+    console.log(num_of_visits)
+ 
+      if(num_of_visits =="0"){
+
+        $("#cookieDiv").removeClass("d-none");
+
+      }
+  })
+
+</script>
 
   {% endblock %}
